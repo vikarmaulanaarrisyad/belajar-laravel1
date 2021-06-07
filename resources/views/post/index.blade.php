@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Data Posts'])
+@extends('layouts.app', ['title' => 'Data Mahasiswa'])
 
 @section('content')
 
@@ -14,7 +14,7 @@
                     <form action="{{ route('post.index') }}" method="GET">
                         <input type="text" name="search"
                             class="w-full bg-gray-200 p-2 rounded shadow-sm border border-gray-200 focus:outline-none focus:bg-white"
-                            placeholder="ketik judul post dan enter">
+                            placeholder="ketik NIM Mahasiswa dan enter">
                     </form>
                 </div>
             </div>
@@ -22,13 +22,19 @@
                 <thead class="justify-between">
                     <tr class="bg-indigo-500 w-full">
                         <th class="px-16 py-2">
-                            <span class="text-white">GAMBAR</span>
+                            <span class="text-white">NIM</span>
                         </th>
                         <th class="px-16 py-2 text-left">
-                            <span class="text-white">JUDUL</span>
+                            <span class="text-white">Nama Mahasiswa</span>
                         </th>
                         <th class="px-16 py-2 text-left">
-                            <span class="text-white">CONTENT</span>
+                            <span class="text-white">No HP</span>
+                        </th>
+                        <th class="px-16 py-2 text-left">
+                            <span class="text-white">Alamat</span>
+                        </th>
+                        <th class="px-16 py-2 text-left">
+                            <span class="text-white">Foto</span>
                         </th>
                         <th class="px-16 py-2">
                             <span class="text-white">AKSI</span>
@@ -39,14 +45,25 @@
                     @forelse($posts as $post)
                         <tr class="bg-white border-2 border-gray-200">
 
+
+                            <td class="px-16 py-2">
+                                {{ $post->nim }}
+                            </td>
+
+                            <td class="px-16 py-2">
+                                {!! $post->nama_mhs !!}
+                            </td>
+
+                            <td class="px-16 py-2">
+                                {!! $post->nhp !!}
+                            </td>
+
+                            <td class="px-16 py-2">
+                                {!! $post->alamat !!}
+                            </td>
+
                             <td class="px-16 py-2">
                                 <img src="{{ Storage::url('public/posts/' . $post->image) }}" class="w-48 rounded-md">
-                            </td>
-                            <td class="px-16 py-2">
-                                {{ $post->title }}
-                            </td>
-                            <td class="px-16 py-2">
-                                {!! $post->content !!}
                             </td>
                             <td class="px-10 py-2 text-center">
                                 <form onsubmit="return confirm('Apakah Anda Yakin ?');"

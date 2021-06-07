@@ -12,6 +12,6 @@ class Post extends Model
 
     //menambah mass assigment
     protected $fillable = [
-        'image', 'title', 'content'
+        'nim', 'nama_mhs', 'nhp','alamat','image'
     ];
 }

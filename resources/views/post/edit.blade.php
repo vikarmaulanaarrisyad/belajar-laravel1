@@ -20,10 +20,21 @@
                 </div>
 
                 <div class="mt-5">
-                    <label>JUDUL POST</label>
-                    <input type="text" name="title" value="{{ old('title', $post->title) }}"
+                    <label>NIM Mahasiswa</label>
+                    <input type="text" name="nim" value="{{ old('title', $post->nim) }}"
                         class="w-full bg-gray-200 p-2 rounded shadow-sm border border-gray-200 focus:outline-none focus:bg-white mt-2"
-                        placeholder="judul post">
+                        placeholder="NIM">
+                    @error('title')
+                        <div class="bg-red-400 p-2 shadow-sm rounded mt-2">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+                <div class="mt-5">
+                    <label>Nama Mahasiswa</label>
+                    <input type="text" name="nama_mhs" value="{{ old('title', $post->nama_mhs) }}"
+                        class="w-full bg-gray-200 p-2 rounded shadow-sm border border-gray-200 focus:outline-none focus:bg-white mt-2"
+                        placeholder="Nama Mahasiswa">
                     @error('title')
                         <div class="bg-red-400 p-2 shadow-sm rounded mt-2">
                             {{ $message }}
@@ -32,14 +43,29 @@
                 </div>
 
                 <div class="mt-5">
-                    <label>KONTEN POST</label>
-                    <textarea name="content">{{ old('content', $post->title) }}</textarea>
-                    @error('content')
+                    <label>Alamat</label>
+                    <input type="text" name="alamat" value="{{ old('title', $post->alamat) }}"
+                        class="w-full bg-gray-200 p-2 rounded shadow-sm border border-gray-200 focus:outline-none focus:bg-white mt-2"
+                        placeholder="Alamat">
+                    @error('title')
                         <div class="bg-red-400 p-2 shadow-sm rounded mt-2">
                             {{ $message }}
                         </div>
                     @enderror
                 </div>
+
+                <div class="mt-5">
+                    <label>No HP</label>
+                    <input type="text" name="nhp" value="{{ old('title', $post->nhp) }}"
+                        class="w-full bg-gray-200 p-2 rounded shadow-sm border border-gray-200 focus:outline-none focus:bg-white mt-2"
+                        placeholder="Alamat">
+                    @error('title')
+                        <div class="bg-red-400 p-2 shadow-sm rounded mt-2">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+
 
                 <div class="mt-5">
                     <button type="submit"

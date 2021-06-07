@@ -18,7 +18,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::latest()->when(request()->search, function ($posts) {
-            $posts = $posts->where('title', 'like', '%' . request()->search . '%');
+            $posts = $posts->where('nim', 'like', '%' . request()->search . '%');
         })->paginate(5);
 
         return view('post.index', compact('posts'));
@@ -35,9 +35,12 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'image'     => 'required|image|mimes:png,jpg,jpeg',
-            'title'     => 'required',
-            'content'   => 'required'
+            'nim'   => 'required',
+            'nama_mhs'     => 'required',
+            'nhp'   => 'required',
+            'alamat'   => 'required',
+            'image'     => 'required|image|mimes:png,jpg,jpeg'
+
         ]);
 
         //upload image
@@ -46,8 +49,10 @@ class PostController extends Controller
 
         $post = Post::create([
             'image'     => $image->hashName(),
-            'title'     => $request->title,
-            'content'   => $request->content
+            'nim'   => $request->nim,
+            'nama_mhs'     => $request->nama_mhs,
+            'nhp'   => $request->nhp,
+            'alamat'   => $request->alamat,
         ]);
 
         if ($post) {
@@ -69,8 +74,12 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         $this->validate($request, [
-            'title'     => 'required',
-            'content'   => 'required'
+            'nim'   => 'required',
+            'nama_mhs'     => 'required',
+            'nhp'   => 'required',
+            'alamat'   => 'required',
+            'image'     => 'required|image|mimes:png,jpg,jpeg'
+
         ]);
 
         //get data post by ID
@@ -79,8 +88,11 @@ class PostController extends Controller
         if ($request->file('image') == "") {
 
             $post->update([
-                'title'     => $request->title,
-                'content'   => $request->content
+                'nim'   => $request->nim,
+                'nama_mhs'     => $request->nama_mhs,
+                'nhp'   => $request->nhp,
+                'alamat'   => $request->alamat
+
             ]);
         } else {
 
@@ -92,9 +104,11 @@ class PostController extends Controller
             $image->storeAs('public/posts', $image->hashName());
 
             $post->update([
-                'image'     => $image->hashName(),
-                'title'     => $request->title,
-                'content'   => $request->content
+                'nim'   => $request->nim,
+                'nama_mhs'     => $request->nama_mhs,
+                'nhp'   => $request->nhp,
+                'alamat'   => $request->alamat,
+                'image'     => $image->hashName()
             ]);
         }
 
@@ -104,6 +118,21 @@ class PostController extends Controller
         } else {
             //redirect dengan pesan error
             return redirect()->route('post.index')->with(['error' => 'Data Gagal Diupdate!']);
+        }
+    }
+
+    public function destroy($id)
+    {
+        $post = Post::findOrFail($id);
+        Storage::disk('local')->delete('public/posts/' . $post->image);
+        $post->delete();
+
+        if ($post) {
+            //redirect dengan pesan sukses
+            return redirect()->route('post.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        } else {
+            //redirect dengan pesan error
+            return redirect()->route('post.index')->with(['error' => 'Data Gagal Dihapus!']);
         }
     }
 }
